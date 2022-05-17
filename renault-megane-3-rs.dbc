@@ -37,12 +37,12 @@ BU_:
 
 
 BO_ 668 Wheel_Speed_Rear: 8 Vector__XXX
- SG_ Wheel_Speed_RR : 23|16@0+ (0.01,0) [0|0] "km/h" Vector__XXX
- SG_ Wheel_Speed_RL : 7|16@0+ (0.01,0) [0|0] "km/h" Vector__XXX
+ SG_ Wheel_Speed_RR : 23|16@0+ (0.005,0) [0|0] "km/h" Vector__XXX
+ SG_ Wheel_Speed_RL : 7|16@0+ (0.005,0) [0|0] "km/h" Vector__XXX
 
 BO_ 666 Wheel_Speed_Front: 7 Vector__XXX
- SG_ Wheel_Speed_FL : 23|16@0+ (0.01,0) [0|0] "km/h" Vector__XXX
- SG_ Wheel_Speed_FR : 7|16@0+ (0.01,0) [0|0] "km/h" Vector__XXX
+ SG_ Wheel_Speed_FL : 23|16@0+ (0.005,0) [0|0] "km/h" Vector__XXX
+ SG_ Wheel_Speed_FR : 7|16@0+ (0.005,0) [0|0] "km/h" Vector__XXX
 
 
 

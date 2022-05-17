@@ -12,7 +12,7 @@ messages = [
                                 byte_order='big_endian',
                                 is_signed=False,
                                 offset=0,
-                                scale=0.01,
+                                scale=0.005,
                                 minimum=0,
                                 unit="km/h"),
             cantools.db.Signal("Wheel_Speed_RR",
@@ -21,7 +21,7 @@ messages = [
                                 byte_order='big_endian',
                                 is_signed=False,
                                 offset=0,
-                                scale=0.01,
+                                scale=0.005,
                                 minimum=0,
                                 unit="km/h")
         ]),
@@ -34,7 +34,7 @@ messages = [
                                 byte_order='big_endian',
                                 is_signed=False,
                                 offset=0,
-                                scale=0.01,
+                                scale=0.005,
                                 minimum=0,
                                 unit="km/h"),
             cantools.db.Signal("Wheel_Speed_FL",
@@ -43,7 +43,7 @@ messages = [
                                 byte_order='big_endian',
                                 is_signed=False,
                                 offset=0,
-                                scale=0.01,
+                                scale=0.005,
                                 minimum=0,
                                 unit="km/h")
         ])
