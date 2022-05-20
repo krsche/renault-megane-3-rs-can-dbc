@@ -50,4 +50,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create --generate-notes --repo $GITHUB_REPOSITORY *.dbc
+          gh release create --generate-notes --repo $GITHUB_REPOSITORY $GITHUB_REF_NAME **/*.dbc
