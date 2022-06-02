@@ -119,7 +119,152 @@ messages = [
                              #  minimum=0,  # ?
                              unit="degree/s",  # ? could be right
                              comment="positive is left"),
-               ])
+               ]),
+
+    db.Message(0x1F6, "Brake_1", 8,
+               signals=[
+                   db.Signal("Is_Pressed",
+                             start=19,
+                             length=1,
+                             byte_order='big_endian',
+                             is_signed=False,
+                             offset=0,
+                             scale=1,
+                             minimum=0,
+                             unit="boolean"),
+                   #    db.Signal("Wheel_Speed_FL",
+                   #              start=23,
+                   #              length=16,
+                   #              byte_order='big_endian',
+                   #              is_signed=False,
+                   #              offset=0,
+                   #              scale=0.005,
+                   #              minimum=0,
+                   #              unit="km/h")
+               ]),
+    db.Message(0x35C, "Pedal_States", 8,
+               signals=[
+                   db.Signal("Pressed_State",
+                             start=47,
+                             length=3,
+                             byte_order='big_endian',
+                             #  is_signed=False,
+                             #  offset=0,
+                             #  scale=1,
+                             #  minimum=0,
+                             #  unit="lookup",
+                             choices={
+                                 0x1: 'not_pressed',
+                                 0x2: 'foot_over_brake',
+                                 0x4: 'braking',
+                             }),
+                   # 0 0 0 0
+                   # 8 4 2 1
+                   # 0 0 1 0 = 2
+                   # 0 1 0 0 = 4
+                   # 1 0 0 0 = 8
+
+                   # 0 0 0
+                   # 4 2 1
+                   # 0 0 1 = 1
+                   # 0 1 0 = 2
+                   # 1 0 0 = 4
+                   #    db.Signal("Wheel_Speed_FL",
+                   #              start=23,
+                   #              length=16,
+                   #              byte_order='big_endian',
+                   #              is_signed=False,
+                   #              offset=0,
+                   #              scale=0.005,
+                   #              minimum=0,
+                   #              unit="km/h")
+                   db.Signal("Clutch",  # ? or pedal
+                             start=43,
+                             length=2,
+                             # 2B       - 2D -      35
+                             # 10 1011    10 1101   11 0101
+                             # 10 10      10 11     11 01
+                             # 10         11        15
+                             # 0 10       0 11      1 01
+                             # 2         3        5
+                             # 10       11        01
+                             # 2         3        1
+                             byte_order='big_endian',
+                             is_signed=False,
+                             offset=0,
+                             scale=0.5,  # max 0xc8=200, min 0x00
+                             minimum=0,
+                             choices={
+                                 1: 'open',
+                                 2: 'closed',
+                                 3: 'transition',
+                             }),
+               ]),
+    db.Message(0x352, "Brake_2", 4,
+               signals=[
+                   db.Signal("Brake_Pressure",
+                             start=31,  # maybe 19 or 23?
+                             length=8,  # maybe 12 or 16?
+                             byte_order='big_endian',
+                             is_signed=False,
+                             offset=0,
+                             scale=1,  # ?
+                             minimum=0,
+                             unit="bar"),
+                   #    db.Signal("Wheel_Speed_FL",
+                   #              start=23,
+                   #              length=16,
+                   #              byte_order='big_endian',
+                   #              is_signed=False,
+                   #              offset=0,
+                   #              scale=0.005,
+                   #              minimum=0,
+                   #              unit="km/h")
+               ]),
+    db.Message(0x186, "Throttle_1", 7,
+               signals=[
+                   db.Signal("Throttle_Pedal_pos_absolute",  # ? or body
+                             start=47,
+                             length=10,  # maybe 11 or 10
+                             byte_order='big_endian',
+                             is_signed=False,
+                             offset=0,
+                             # max (no kickdown) = 0xDF2 =  min 0x002; max (kickdown) = 0xFA2 #profile linear (veh off)
+                             # max (no kickdown) = 0xDF2 =  min 0x002; max (kickdown) = 0xFA2
+                             scale=0.1,
+                             minimum=0,
+                             unit="percent"),
+               ]),
+    db.Message(0x18A, "Throttle_2", 6,
+               signals=[
+                   db.Signal("Throttle_pedal_Pos_rel",  # ? or pedal
+                             start=23,
+                             length=8,
+                             byte_order='big_endian',
+                             is_signed=False,
+                             offset=0,
+                             scale=0.5,  # max 0xc8=200, min 0x00
+                             minimum=0,
+                             unit="percent"),
+               ]),
+    db.Message(0x4F8, "Handbrake", 7,
+               signals=[
+                   db.Signal("Handbrake_on",  # 0x35C last nibble of last byte changes similarly
+                             start=3,
+                             length=2,
+                             # 01
+                             # 10
+                             byte_order='big_endian',
+                             is_signed=False,
+                             choices={
+                                 1: 'false',
+                                 2: 'true',
+                                 3: 'unknown',
+                                 4: 'unknown',
+                             }),
+               ]),
+
+    # 0x12E 3. byte FD -> FC    # <-- beschleunigung Z
 ]
 
 bus = db.database.Bus("OBD2-Port", baudrate=500000)
